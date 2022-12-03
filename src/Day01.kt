@@ -1,17 +1,29 @@
+import java.io.File
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun calorieCounts(filename: String): ArrayList<Int> {
+        var counts: ArrayList<Int> = ArrayList()
+        counts.add(0)
+        File(filename).forEachLine { 
+            if (it.trim().length == 0) {
+                counts.add(0);
+            } else {
+                counts[counts.size - 1] += it.toInt();
+            }
+        }
+        return counts;
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    fun part1(counts: ArrayList<Int>): Int? {
+        return counts.maxOrNull();
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+    fun part2(counts: ArrayList<Int>): Int? {
+        counts.sortDescending();
+        return counts[0] + counts[1] + counts[2]
+    }
 
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    var calorieCounts = calorieCounts("input_day01.txt")
+    println(part1(calorieCounts))
+    println(part2(calorieCounts))
 }
